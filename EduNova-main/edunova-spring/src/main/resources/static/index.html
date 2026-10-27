@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNova</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <h1>EduNova</h1>
+        <p class="subtitle">Sistema de Gestión de Capacitación</p>
+        <form id="formSaludo">
+            <input type="text" id="nombreInput" placeholder="Ingresa tu nombre" required>
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        document.getElementById('formSaludo').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreInput').value;
+            fetch(`/api/bienvenida?nombre=${encodeURIComponent(nombre)}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('resultado').innerText = data;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

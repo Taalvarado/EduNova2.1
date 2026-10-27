@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNova - Lista de Participantes</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header-bar">
+            <h1>EduNova - Participantes</h1>
+            <div class="user-info">
+                <span>Usuario: <strong sec:authentication="name">admin</strong></span>
+                <form th:action="@{/logout}" method="post" style="display:inline; margin-left: 10px;">
+                    <button type="submit" class="btn btn-secondary btn-sm">Cerrar sesión</button>
+                </form>
+            </div>
+        </header>
+
+        <div style="margin-bottom: 20px;" sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/participantes/nuevo}" class="btn btn-primary">+ Nuevo Participante</a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="padding: 12px 25px;">Nombre</th>
+                        <th style="padding: 12px 25px;">Correo</th>
+                        <th style="padding: 12px 25px;">Departamento</th>
+                        <th style="padding: 12px 25px; min-width: 180px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${participantes}">
+                        <td style="padding: 12px 25px;" th:text="${p.nombre}">Nombre</td>
+                        <td style="padding: 12px 25px;" th:text="${p.correo}">Correo</td>
+                        <td style="padding: 12px 25px;" th:text="${p.departamento}">Departamento</td>
+                        <td style="padding: 12px 25px;">
+                            <div class="btn-group" sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/participantes/{id}/editar(id=${p.id})}" class="btn btn-secondary btn-sm">Editar</a>
+                                <form th:action="@{/participantes/{id}/eliminar(id=${p.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Deseas eliminar este participante?')">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

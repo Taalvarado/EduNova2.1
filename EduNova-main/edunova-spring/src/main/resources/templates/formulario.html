@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Participante - EduNova</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div class="container container-sm">
+        <div class="header-bar" style="justify-content: center; text-align: center;">
+            <h2 class="title-stacked">
+                Formulario<br>
+                <span>de Participante</span>
+            </h2>
+        </div>
+
+        <form th:action="@{/participantes}" th:object="${participante}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" required placeholder="Ingrese nombre completo">
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" th:field="*{correo}" required placeholder="correo@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento" th:field="*{departamento}" required placeholder="Ingrese departamento">
+            </div>
+
+            <div class="actions-bar">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/participantes}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
