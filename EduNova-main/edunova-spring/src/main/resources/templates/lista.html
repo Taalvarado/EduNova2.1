@@ -1,47 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduNova - Lista de Participantes</title>
+    <title>EduNova - Participantes</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-<body>
-    <div class="container">
-        <header class="header-bar">
-            <h1>EduNova - Participantes</h1>
-            <div class="user-info">
-                <span>Usuario: <strong sec:authentication="name">admin</strong></span>
-                <form th:action="@{/logout}" method="post" style="display:inline; margin-left: 10px;">
-                    <button type="submit" class="btn btn-secondary btn-sm">Cerrar sesión</button>
-                </form>
-            </div>
-        </header>
+<body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-light);">
 
-        <div style="margin-bottom: 20px;" sec:authorize="hasRole('ADMIN')">
+    <!-- Barra de Navegación Superior (Ocupa el 100% simétrica) -->
+    <header style="background-color: var(--primary-blue); width: 100%; height: 70px; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; color: white; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 6px; font-size: 0.95rem;">GuateX</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <h2 style="margin: 0; font-size: 1.3rem; font-weight: 600; color: white;">EduNova</h2>
+                <span style="font-size: 0.75rem; background-color: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; color: #fff;">Participantes</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 0.95rem;">Hola, <strong th:text="${session.usuario ?: 'Administrador'}">Administrador</strong></span>
+            <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">
+                <button type="submit" class="btn btn-secondary btn-sm" style="background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; cursor: pointer;">Cerrar Sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Contenido Principal Centrado -->
+    <div class="container" style="margin: 40px auto; flex: 1; max-width: 1000px; width: 90%;">
+        <!-- Barra de Encabezado de la Sección -->
+        <div class="header-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: transparent; padding: 0; box-shadow: none;">
+            <h2 style="color: var(--primary-blue); margin: 0;">Gestión de Participantes</h2>
             <a th:href="@{/participantes/nuevo}" class="btn btn-primary">+ Nuevo Participante</a>
         </div>
 
-        <div class="table-container">
-            <table>
+        <!-- Tabla Estilizada -->
+        <div class="table-container" style="background: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr>
-                        <th style="padding: 12px 25px;">Nombre</th>
-                        <th style="padding: 12px 25px;">Correo</th>
-                        <th style="padding: 12px 25px;">Departamento</th>
-                        <th style="padding: 12px 25px; min-width: 180px;">Acciones</th>
+                    <tr style="background-color: var(--primary-blue); color: white;">
+                        <th style="padding: 12px 15px; text-align: left;">Nombre</th>
+                        <th style="padding: 12px 15px; text-align: left;">Correo</th>
+                        <th style="padding: 12px 15px; text-align: left;">Departamento</th>
+                        <th style="padding: 12px 15px; text-align: center;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="p : ${participantes}">
-                        <td style="padding: 12px 25px;" th:text="${p.nombre}">Nombre</td>
-                        <td style="padding: 12px 25px;" th:text="${p.correo}">Correo</td>
-                        <td style="padding: 12px 25px;" th:text="${p.departamento}">Departamento</td>
-                        <td style="padding: 12px 25px;">
-                            <div class="btn-group" sec:authorize="hasRole('ADMIN')">
+                    <tr th:each="p : ${participantes}" style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 12px 15px;" th:text="${p.nombre}"></td>
+                        <td style="padding: 12px 15px;" th:text="${p.correo}"></td>
+                        <td style="padding: 12px 15px;" th:text="${p.departamento}"></td>
+                        <td style="padding: 12px 15px; text-align: center;">
+                            <div class="btn-group" style="display: flex; gap: 8px; justify-content: center;">
                                 <a th:href="@{/participantes/{id}/editar(id=${p.id})}" class="btn btn-secondary btn-sm">Editar</a>
-                                <form th:action="@{/participantes/{id}/eliminar(id=${p.id})}" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Deseas eliminar este participante?')">Eliminar</button>
+                                <form th:action="@{/participantes/{id}/eliminar(id=${p.id})}" method="post" style="display:inline; margin: 0;">
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
                             </div>
                         </td>
@@ -50,5 +61,11 @@
             </table>
         </div>
     </div>
+
+    <!-- Pie de Página Institucional -->
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); background-color: #ffffff; width: 100%; box-sizing: border-box; margin-top: auto;">
+        EduNova &copy; 2026 - Guatex | A Tu Destino... Seguro y Puntual!
+    </footer>
+
 </body>
 </html>

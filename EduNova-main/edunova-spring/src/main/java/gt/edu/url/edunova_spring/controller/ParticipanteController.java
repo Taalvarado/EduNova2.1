@@ -31,10 +31,12 @@ public class ParticipanteController {
         return "formulario";
     }
 
+    // --- CAMBIO CLAVE AQUÍ ---
     @PostMapping
     public String guardar(@ModelAttribute("participante") Participante participante) {
         participanteService.guardar(participante);
-        return "redirect:/participantes";
+        // Redirige al paso final: El Portal de Capacitaciones
+        return "redirect:/capacitaciones";
     }
 
     @GetMapping("/{id}/editar")
