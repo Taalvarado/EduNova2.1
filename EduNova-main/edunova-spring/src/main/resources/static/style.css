@@ -23,10 +23,12 @@ body {
     color: var(--text-dark);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-}
+    padding: 20px 10px; /* Reducimos el padding lateral para móviles */
+    box-sizing: border-box;
+} 
 
 .container {
     width: 100%;
@@ -222,4 +224,18 @@ input[type="password"]:focus {
     gap: 12px;
     margin-top: 25px;
     align-items: center;
+}
+/* Ajuste de diseño  para pantallas pequeñas  */
+@media (max-width: 576px) {
+    body {
+        justify-content: flex-start; 
+        padding-top: 15px;
+    }
+    
+    .container, .container-sm {
+        width: 100%;
+        padding: 20px 15px; 
+        margin: 10px auto;
+        box-sizing: border-box;
+    }
 }
