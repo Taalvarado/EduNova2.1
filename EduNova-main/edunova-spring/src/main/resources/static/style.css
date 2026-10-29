@@ -140,7 +140,7 @@ h2 {
     align-items: center;
 }
 
-/* Tablas con espaciado */
+/* Tablas con espaciado y padding integrado */
 .table-container {
     overflow-x: auto;
     margin-top: 15px;
@@ -159,6 +159,7 @@ th {
     text-align: left;
     font-size: 0.95rem;
     letter-spacing: 0.5px;
+    padding: 12px 16px; /* <-- Espaciado agregado para cabeceras */
 }
 
 th:first-child {
@@ -173,6 +174,7 @@ td {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.95rem;
     vertical-align: middle;
+    padding: 12px 16px; /* <-- Espaciado agregado para celdas */
 }
 
 tr:nth-child(even) {

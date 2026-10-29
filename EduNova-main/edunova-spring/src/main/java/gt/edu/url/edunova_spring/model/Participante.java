@@ -1,5 +1,6 @@
 package gt.edu.url.edunova_spring.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,19 +15,27 @@ public class Participante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false, unique = true)
     private String correo;
+
+    @Column(nullable = false)
     private String departamento;
 
+    // Constructor vacío (Obligatorio para JPA y Spring)
     public Participante() {
     }
 
+    // Constructor con parámetros
     public Participante(String nombre, String correo, String departamento) {
         this.nombre = nombre;
         this.correo = correo;
         this.departamento = departamento;
     }
 
+    // Getters y Setters
     public Long getId() {
         return id;
     }

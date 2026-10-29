@@ -2,20 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Error - EduNova / GuateEx</title>
-    <!-- Vinculamos tu archivo de estilos principal -->
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>EduNova - Error</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-    <div class="container" style="text-align: center; margin-top: 40px;">
-        <h2 style="color: #D9534F;">¡Vaya, algo ha salido mal!</h2>
-        <p>Lo sentimos, ha ocurrido un inconveniente inesperado en el sistema de <strong>EduNova - GuateEx</strong>.</p>
-        <p>Por favor, verifica la ruta o regresa al formulario de registro.</p>
-        
-        <br>
-        <a th:href="@{/participantes/nuevo}" style="display: inline-block; background-color: #001B5A; color: #FFFFFF; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold; transition: background-color 0.3s;">
-            Volver al Registro
-        </a>
+
+    <!-- Barra de Navegación Superior Estándar -->
+    <header style="background-color: var(--primary-blue); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 5px 12px; border-radius: 6px; font-size: 0.9rem;">GuateX</span>
+            <h2 style="margin: 0; font-size: 1.25rem; font-weight: 600;">EduNova <span style="font-size: 0.8rem; background-color: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; margin-left: 5px;">Sistema</span></h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 0.95rem;">Portal de Capacitación</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <div class="container container-sm" style="margin-top: 50px; margin-bottom: 40px; text-align: center;">
+        <div style="margin-bottom: 25px;">
+            <h1 style="color: var(--primary-blue); font-size: 3rem; margin-bottom: 10px;">¡Atención!</h1>
+            <h2 style="color: var(--text-dark); font-size: 1.5rem; margin-bottom: 15px;">Ha ocurrido un error en la solicitud</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                La página que intentas consultar no está disponible o el sistema encontró una incidencia temporal.
+            </p>
+        </div>
+
+        <div class="actions-bar" style="justify-content: center; margin-top: 30px;">
+            <a th:href="@{/participantes}" class="btn btn-primary" style="padding: 10px 25px; text-decoration: none; display: inline-block;">Regresar al Sistema</a>
+        </div>
     </div>
+
+    <!-- Pie de Página Institucional -->
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: auto;">
+        EduNova &copy; 2026 - Guatex | A Tu Destino... Seguro y Puntual!
+    </footer>
+
 </body>
 </html>
