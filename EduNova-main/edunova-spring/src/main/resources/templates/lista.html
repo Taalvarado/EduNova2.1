@@ -5,29 +5,39 @@
     <title>EduNova - Participantes</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-<body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-light);">
+<body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-color, #f4f6f9);">
 
-    <!-- Barra de Navegación Superior (Ocupa el 100% simétrica) -->
-    <header style="background-color: var(--primary-blue); width: 100%; height: 70px; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; color: white; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <!-- Barra de Navegación Superior -->
+    <header style="background-color: var(--primary-blue); width: 100%; height: 70px; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;">
+        
+        <!-- Lado Izquierdo: Logo, Nombre y Botón al Portal -->
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 6px; font-size: 0.95rem;">GuateX</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <h2 style="margin: 0; font-size: 1.3rem; font-weight: 600; color: white;">EduNova</h2>
-                <span style="font-size: 0.75rem; background-color: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; color: #fff;">Participantes</span>
+            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 4px;">GuateX</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <h2 style="margin: 0; font-size: 1.3rem; font-weight: 600; color: #ffffff;">EduNova</h2>
+                
+                <!-- Botón de Portal de Capacitación ubicado junto al título -->
+                <a th:href="@{/capacitaciones}" style="background-color: rgba(255, 255, 255, 0.2); color: white; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
+                    Portal de Capacitación
+                </a>
             </div>
         </div>
+
+        <!-- Lado Derecho: Usuario y Salida -->
         <div style="display: flex; align-items: center; gap: 20px;">
-            <span style="font-size: 0.95rem;">Hola, <strong th:text="${session.usuario ?: 'Administrador'}">Administrador</strong></span>
+            <span style="font-size: 0.95rem; color: #ffffff;">Hola, <strong th:text="${session.usuario ?: 'Administrador'}">Administrador</strong></span>
+            
             <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">
-                <button type="submit" class="btn btn-secondary btn-sm" style="background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; cursor: pointer;">Cerrar Sesión</button>
+                <button type="submit" class="btn btn-secondary btn-sm" style="background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
             </form>
         </div>
     </header>
 
     <!-- Contenido Principal Centrado -->
     <div class="container" style="margin: 40px auto; flex: 1; max-width: 1000px; width: 90%;">
+        
         <!-- Barra de Encabezado de la Sección -->
-        <div class="header-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: transparent; padding: 0; box-shadow: none;">
+        <div class="header-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h2 style="color: var(--primary-blue); margin: 0;">Gestión de Participantes</h2>
             <a th:href="@{/participantes/nuevo}" class="btn btn-primary">+ Nuevo Participante</a>
         </div>
@@ -36,22 +46,24 @@
         <div class="table-container" style="background: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr style="background-color: var(--primary-blue); color: white;">
+                    <tr style="background-color: var(--primary-blue); color: #ffffff;">
                         <th style="padding: 12px 15px; text-align: left;">Nombre</th>
                         <th style="padding: 12px 15px; text-align: left;">Correo</th>
                         <th style="padding: 12px 15px; text-align: left;">Departamento</th>
-                        <th style="padding: 12px 15px; text-align: center;">Acciones</th>
+                        <!-- Oculta la columna Acciones si el usuario es el entrenador -->
+                        <th th:if="${session.usuario != 'entrenador'}" style="padding: 12px 15px; text-align: center;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="p : ${participantes}" style="border-bottom: 1px solid var(--border-color);">
+                    <tr th:each="p : ${participantes}" style="border-bottom: 1px solid var(--border-color, #e5e7eb);">
                         <td style="padding: 12px 15px;" th:text="${p.nombre}"></td>
                         <td style="padding: 12px 15px;" th:text="${p.correo}"></td>
                         <td style="padding: 12px 15px;" th:text="${p.departamento}"></td>
-                        <td style="padding: 12px 15px; text-align: center;">
+                        <!-- Oculta los botones de Editar y Eliminar si el usuario es el entrenador -->
+                        <td th:if="${session.usuario != 'entrenador'}" style="padding: 12px 15px; text-align: center;">
                             <div class="btn-group" style="display: flex; gap: 8px; justify-content: center;">
                                 <a th:href="@{/participantes/{id}/editar(id=${p.id})}" class="btn btn-secondary btn-sm">Editar</a>
-                                <form th:action="@{/participantes/{id}/eliminar(id=${p.id})}" method="post" style="display:inline; margin: 0;">
+                                <form th:action="@{/participantes/{id}/eliminar(id=${p.id})}" method="post" style="display: inline; margin: 0;">
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
                             </div>
@@ -63,7 +75,7 @@
     </div>
 
     <!-- Pie de Página Institucional -->
-    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); background-color: #ffffff; width: 100%; box-sizing: border-box; margin-top: auto;">
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color, #e5e7eb);">
         EduNova &copy; 2026 - Guatex | A Tu Destino... Seguro y Puntual!
     </footer>
 

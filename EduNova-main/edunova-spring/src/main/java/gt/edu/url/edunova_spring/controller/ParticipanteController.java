@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import gt.edu.url.edunova_spring.model.Participante;
 import gt.edu.url.edunova_spring.service.ParticipanteService;
 
+// captura el usuario actual
+import java.security.Principal;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/participantes")
 public class ParticipanteController {
@@ -20,7 +24,12 @@ public class ParticipanteController {
     private ParticipanteService participanteService;
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model, HttpSession session, Principal principal) {
+        // Captura el usuario autenticado por Spring Security y lo guarda en la sesión
+        if (principal != null) {
+            session.setAttribute("usuario", principal.getName());
+        }
+
         model.addAttribute("participantes", participanteService.listarTodos());
         return "lista";
     }
@@ -35,8 +44,8 @@ public class ParticipanteController {
     @PostMapping
     public String guardar(@ModelAttribute("participante") Participante participante) {
         participanteService.guardar(participante);
-        // Redirige al paso final: El Portal de Capacitaciones
-        return "redirect:/capacitaciones";
+        // Redirige a la tabla de gestión de participantes
+        return "redirect:/participantes";
     }
 
     @GetMapping("/{id}/editar")

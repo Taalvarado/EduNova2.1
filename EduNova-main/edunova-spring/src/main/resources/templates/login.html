@@ -5,54 +5,65 @@
     <title>EduNova - Iniciar Sesión</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-<body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-light);">
+<body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-color, #f4f6f9);">
 
-    <!-- Barra de Navegación Superior (Ocupa el 100% simétrica) -->
-    <header style="background-color: var(--primary-blue); width: 100%; height: 70px; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; color: white; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <!-- Barra de Navegación Superior -->
+    <header style="background-color: var(--primary-blue); width: 100%; height: 70px; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;">
+        
+        <!-- Lado Izquierdo: Logo y Título -->
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 6px; font-size: 0.95rem;">GuateX</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <h2 style="margin: 0; font-size: 1.3rem; font-weight: 600; color: white;">EduNova</h2>
-                <span style="font-size: 0.75rem; background-color: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; color: #fff;">Acceso</span>
+            <span style="background-color: #FFD700; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 4px;">GuateX</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <h2 style="margin: 0; font-size: 1.3rem; font-weight: 600; color: #ffffff;">EduNova</h2>
+                <span style="font-size: 0.75rem; background-color: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; color: #ffffff;">Acceso</span>
             </div>
         </div>
+
+        <!-- Lado Derecho: Enlace al Portal -->
         <div>
-            <a th:href="@{/capacitaciones}" style="color: white; text-decoration: none; font-size: 0.95rem;">Portal de Capacitación</a>
+            <a th:href="@{/capacitaciones}" style="color: white; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Portal de Capacitación</a>
         </div>
     </header>
 
-    <!-- Contenido Principal: Formulario de Login Centrado -->
-    <div class="container container-sm" style="margin: 40px auto; max-width: 450px; width: 90%;"></div>
-        <div style="text-align: center; margin-bottom: 25px;">
-            <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 5px;">Iniciar Sesión</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Ingrese sus credenciales institucionales</p>
-        </div>
-
-        <!-- Mensaje de error si falla la autenticación -->
-        <div th:if="${param.error}" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-size: 0.9rem; border: 1px solid #f5c6cb;">
-            Usuario o contraseña incorrectos.
-        </div>
-
-        <form th:action="@{/login}" method="post">
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="username" style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-dark);">Usuario</label>
-                <input type="text" id="username" name="username" placeholder="Ej. usuario.guatex" required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box;" />
+    <!-- Contenido Principal: Formulario de Login -->
+    <div style="display: flex; justify-content: center; align-items: center; flex: 1; padding: 40px 20px; box-sizing: border-box;">
+        <div class="container container-sm" style="background-color: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); width: 100%; max-width: 450px; box-sizing: border-box;">
+            
+            <!-- Logotipo Oficial de GuateX -->
+            <div style="text-align: center; margin-bottom: 25px;">
+                <img src="/logo.png" alt="Logotipo GuateX" style="max-width: 200px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
 
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="password" style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-dark);">Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box;" />
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 5px; margin-top: 0;">Iniciar Sesión</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Ingrese sus credenciales institucionales</p>
             </div>
 
-            <div class="actions-bar" style="justify-content: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; cursor: pointer;">Ingresar al Sistema</button>
+            <!-- Mensaje de error si falla la autenticación -->
+            <div th:if="${param.error}" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem; text-align: center;">
+                Usuario o contraseña incorrectos.
             </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="username" style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--primary-blue); font-size: 0.9rem;">Usuario</label>
+                    <input type="text" id="username" name="username" placeholder="Ej. admin" required style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="password" style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--primary-blue); font-size: 0.9rem;">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                </div>
+
+                <div class="actions-bar" style="display: flex; justify-content: center; margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; background-color: var(--primary-blue); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1rem;">Ingresar al Sistema</button>
+                </div>
+            </form>
         </div>
-        </form>
     </div>
 
-    <!-- Pie de Página Institucional Fijo Abajo -->
-    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); background-color: #ffffff; width: 100%; box-sizing: border-box; margin-top: auto;">
+    <!-- Pie de Página Institucional -->
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color, #e5e7eb); background-color: white;">
         EduNova &copy; 2026 - Guatex | A Tu Destino... Seguro y Puntual!
     </footer>
 
